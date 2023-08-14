@@ -72,3 +72,20 @@ def test_real_example():
     print('Label string:', res[0])
     print('Char string:', '"' + res[1] + '"')
     assert res[1] == 'submitt both mental and corporeal, is far beyond any idea'
+
+def test_oov_example():
+    """Mini example, just to check that everything is working."""
+    corpus = 'i j ij'  # two words "a" and "ba", separated by whitespace
+    chars = 'ijk ' # the first three characters which occur in the matrix (in this ordering)
+    print(chars)
+    word_chars = 'ijk'  # whitespace not included which serves as word-separating character
+    mat = np.array([[[0.9, 0.1, 0.0, 0.0, 0.0]], [[0.0, 0.0, 0.0, 0.0, 1.0]],
+                    [[0.01, 0.4, 0.4, 0.0, 0.0]]])  # 3 time-steps and 4 characters per time time ("a", "b", " ", blank)
+
+    res = apply_word_beam_search(mat, corpus, chars, word_chars)
+    print('')
+    print('Mini example:')
+    print('Label string:', res[0])
+    print('Char string:', '"' + res[1] + '"')
+    assert res[1] == 'ba'
+test_oov_example()

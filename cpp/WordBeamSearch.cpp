@@ -2,6 +2,8 @@
 #include "Beam.hpp"
 #include <vector>
 #include <memory>
+#include <algorithm>
+
 
 
 std::vector<uint32_t> wordBeamSearch(const IMatrix& mat, size_t beamWidth, const std::shared_ptr<LanguageModel>& lm, LanguageModelType lmType)
@@ -38,7 +40,20 @@ std::vector<uint32_t> wordBeamSearch(const IMatrix& mat, size_t beamWidth, const
 			curr.addBeam(beam->createChildBeam(prBlank, prNonBlank));
 
 			// extend current beam
-			const std::vector<uint32_t> nextChars = beam->getNextChars();
+			std::vector<uint32_t> nextChars = beam->getNextChars();
+			auto maxChar=mat.getAt(t, 0);
+			size_t maxCharIndex=-1;
+			for (size_t i=1; i<maxC; i++) {
+				
+				if (maxChar < mat.getAt(t, i)) {
+					maxChar =  mat.getAt(t, i);
+					maxCharIndex = i;
+				}
+			};
+			if (std::find(nextChars.begin(),nextChars.end(), maxChar)==nextChars.end()) {
+				nextChars.push_back(maxCharIndex);
+			}
+
 			for (const auto c : nextChars)
 			{
 				prBlank = 0.0;
