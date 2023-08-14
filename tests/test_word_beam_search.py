@@ -80,7 +80,7 @@ def test_oov_example():
     print(chars)
     word_chars = 'ijk'  # whitespace not included which serves as word-separating character
     mat = np.array([[[0.9, 0.1, 0.0, 0.0, 0.0]], [[0.0, 0.0, 0.0, 0.0, 1.0]],
-                    [[0.01, 0.4, 0.4, 0.0, 0.0]]])  # 3 time-steps and 4 characters per time time ("a", "b", " ", blank)
+                    [[0.01, 0.4, 0.5, 0.0, 0.0]]])  # 3 time-steps and 4 characters per time time ("a", "b", " ", blank)
 
     res = apply_word_beam_search(mat, corpus, chars, word_chars)
     print('')

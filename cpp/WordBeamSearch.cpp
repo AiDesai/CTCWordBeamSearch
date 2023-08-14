@@ -41,8 +41,9 @@ std::vector<uint32_t> wordBeamSearch(const IMatrix& mat, size_t beamWidth, const
 
 			// extend current beam
 			std::vector<uint32_t> nextChars = beam->getNextChars();
+			
 			auto maxChar=mat.getAt(t, 0);
-			size_t maxCharIndex=-1;
+			size_t maxCharIndex=0;
 			for (size_t i=1; i<maxC; i++) {
 				
 				if (maxChar < mat.getAt(t, i)) {
@@ -50,9 +51,10 @@ std::vector<uint32_t> wordBeamSearch(const IMatrix& mat, size_t beamWidth, const
 					maxCharIndex = i;
 				}
 			};
-			if (maxCharIndex!=blank && std::find(nextChars.begin(),nextChars.end(), maxChar)==nextChars.end()) {
+			if (maxCharIndex!=blank && std::find(nextChars.begin(),nextChars.end(), maxCharIndex)==nextChars.end()) {
 				nextChars.push_back(maxCharIndex);
 			}
+			
 
 			for (const auto c : nextChars)
 			{
